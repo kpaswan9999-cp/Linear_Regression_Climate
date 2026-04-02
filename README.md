@@ -1,3 +1,5 @@
+# Live Link: https://linear-regression-climate-2.onrender.com
+
 # 🌩 AtmosAI — Premium Climate Intelligence Engine
 
 **AtmosAI** is a high-accuracy climate prediction platform that leverages Linear Regression to estimate average temperatures based on 8 key meteorological parameters. It features a stunning, premium dark-themed "Glassmorphism" UI with advanced weather animations including drifting clouds, subtle rain, and random lightning flashes.
