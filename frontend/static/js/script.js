@@ -2,9 +2,7 @@
 
 // CONFIGURATION: Replace with your Render Backend URL after deployment
 // Example: const API_BASE_URL = 'https://your-app-name.onrender.com';
-const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://127.0.0.1:5000' 
-    : ''; // Leave empty to use relative if on same domain, or paste Render URL
+const API_BASE_URL = 'https://linear-regression-model-climate-deployed.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
 
