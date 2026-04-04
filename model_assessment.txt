@@ -1,3 +1,6 @@
-Train R2: 0.9999649043714132
-Test R2: 0.9999641094434959
-Assessment: Model looks stable.
+Best Alpha: 0.01
+Train R2: 1.0000
+Test R2: 1.0000
+CV Mean R2: 1.0000 (+/- 0.0000)
+Train-Test Gap: 0.0000
+Status: Model is well-generalized and stable.

@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Debug logging for Render paths
 print(f"RENDER DEBUG: BASE_DIR is {BASE_DIR}")
-template_path = os.path.join(BASE_DIR, 'templates')
+template_path = os.path.join(BASE_DIR, 'frontend')
 print(f"RENDER DEBUG: Checking for templates at {template_path}")
 if os.path.exists(template_path):
     print(f"RENDER DEBUG: Templates folder found. Contents: {os.listdir(template_path)}")
@@ -21,8 +21,8 @@ else:
 
 # Initialize Flask app with absolute paths for deployment reliability
 app = Flask(__name__, 
-            template_folder=os.path.join(BASE_DIR, 'templates'),
-            static_folder=os.path.join(BASE_DIR, 'static'))
+            template_folder=os.path.join(BASE_DIR, 'frontend'),
+            static_folder=os.path.join(BASE_DIR, 'frontend', 'static'))
 CORS(app) # Enable CORS for all routes
 
 HISTORY_FILE = os.path.join(BASE_DIR, 'history.json')

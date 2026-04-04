@@ -11,13 +11,37 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1.py" },
-    { "source": "/", "destination": "/frontend/index.html" },
-    { "source": "/index.html", "destination": "/frontend/index.html" },
-    { "source": "/about", "destination": "/frontend/about.html" },
-    { "source": "/history", "destination": "/frontend/history.html" },
-    { "source": "/result", "destination": "/frontend/result.html" },
-    { "source": "/static/(.*)", "destination": "/frontend/static/$1" },
-    { "source": "/(.*)", "destination": "/frontend/$1" }
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1.py"
+    },
+    {
+      "source": "/",
+      "destination": "/frontend/index.html"
+    },
+    {
+      "source": "/index.html",
+      "destination": "/frontend/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/frontend/about.html"
+    },
+    {
+      "source": "/history",
+      "destination": "/frontend/history.html"
+    },
+    {
+      "source": "/result",
+      "destination": "/frontend/result.html"
+    },
+    {
+      "source": "/static/(.*)",
+      "destination": "/frontend/static/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/frontend/$1"
+    }
   ]
 }

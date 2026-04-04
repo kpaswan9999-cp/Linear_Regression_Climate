@@ -23,55 +23,88 @@
         <p class="loader-text">Computing</p>
     </div>
 
-    <!-- Background -->
     <div class="atmos-bg"></div>
-    <div class="cloud-layer">
-        <div class="cloud-blob cb-1"></div>
-        <div class="cloud-blob cb-2"></div>
-        <div class="cloud-blob cb-3"></div>
+
+    <!-- Mode 1: Sunny Layer -->
+    <div class="sunny-elements">
+        <div class="sun-scene">
+            <div class="sun-glow"></div>
+            <div class="sun-core"></div>
+            <div class="sun-rays"></div>
+        </div>
+        <div class="bird-scene"></div>
+    </div>
+
+    <!-- Mode 2: Rainy Layer -->
+    <div class="rainy-elements">
+        <div class="cloud-scene">
+            <div class="cloud cloud-a cl-1"></div>
+            <div class="cloud cloud-b cl-2"></div>
+            <div class="cloud cloud-a cl-3"></div>
+            <div class="cloud cloud-c cl-4"></div>
+            <div class="cloud cloud-b cl-5"></div>
+            <div class="cloud cloud-a cl-6"></div>
+            <div class="cloud cloud-c cl-7"></div>
+            <div class="cloud cloud-b cl-8"></div>
+        </div>
+        <div class="rain-scene"></div>
+        <div class="lightning-overlay"></div>
+        <svg class="lightning-bolt" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <polyline points="50,0 45,30 55,30 42,70 52,70 38,100"
+                      stroke="rgba(200,230,255,0.9)" stroke-width="0.8"
+                      fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+    <!-- Mode 3: Winter Layer -->
+    <div class="winter-elements">
+        <div class="snow-scene"></div>
+        <div class="aurora-borealis"></div>
+        <!-- Advanced Background FX -->
+        <div class="shooting-stars"></div>
+        <div class="frost-vignette"></div>
+        
+        <!-- Drifting Mist Layers -->
+        <div class="winter-mist mist-1"></div>
+        <div class="winter-mist mist-2"></div>
+        <div class="winter-mist mist-3"></div>
+        <!-- Ground Frost -->
+        <div class="ground-frost"></div>
+        <!-- Ice Shimmer Particles (CSS-only) -->
+        <div class="ice-particles">
+            <span class="ice-dot" style="--ix:10%;--iy:70%;--id:0s;--is:1.2"></span>
+            <span class="ice-dot" style="--ix:25%;--iy:55%;--id:0.8s;--is:0.9"></span>
+            <span class="ice-dot" style="--ix:40%;--iy:80%;--id:1.4s;--is:1.5"></span>
+            <span class="ice-dot" style="--ix:60%;--iy:65%;--id:0.3s;--is:0.7"></span>
+            <span class="ice-dot" style="--ix:75%;--iy:75%;--id:1.1s;--is:1.3"></span>
+            <span class="ice-dot" style="--ix:88%;--iy:60%;--id:0.6s;--is:1.0"></span>
+            <span class="ice-dot" style="--ix:50%;--iy:45%;--id:1.8s;--is:0.8"></span>
+            <span class="ice-dot" style="--ix:15%;--iy:40%;--id:2.2s;--is:1.1"></span>
+        </div>
     </div>
     <div class="grain"></div>
 
-    <!-- Floating Clouds -->
-    <div class="cloud-scene">
-        <div class="cloud cloud-b cl-1"></div>
-        <div class="cloud cloud-a cl-2"></div>
-        <div class="cloud cloud-c cl-3"></div>
-        <div class="cloud cloud-b cl-4"></div>
-        <div class="cloud cloud-a cl-5"></div>
-        <div class="cloud cloud-c cl-6"></div>
-        <div class="cloud cloud-b cl-7"></div>
-        <div class="cloud cloud-a cl-8"></div>
-    </div>
-
-    <!-- Rain -->
-    <div class="rain-scene"></div>
-
-    <!-- Lightning -->
-    <div class="lightning-overlay"></div>
-    <svg class="lightning-bolt" viewBox="0 0 100 100" preserveAspectRatio="none"
-         style="top:0;left:0;width:100vw;height:100vh;">
-        <polyline points="50,0 45,30 55,30 42,70 52,70 38,100"
-                  stroke="rgba(200,230,255,0.9)" stroke-width="0.8"
-                  fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="nav-logo">
+        <a href="/" class="nav-logo">
             <div class="logo-icon">🌦</div>
             <span class="logo-text">Atmos<span>AI</span></span>
         </a>
         <div class="nav-links">
-            <a href="index.html" class="nav-link">
+            <a href="/" class="nav-link">
                 <span class="nav-icon">⚡</span> Predict
             </a>
-            <a href="about.html" class="nav-link">
+            <a href="/about" class="nav-link">
                 <span class="nav-icon">📡</span> About
             </a>
-            <a href="history.html" class="nav-link">
+            <a href="/history" class="nav-link">
                 <span class="nav-icon">🕒</span> History
             </a>
+            <!-- Theme Toggle -->
+            <button class="theme-toggle-btn" id="theme-toggle" title="Switch Mode">
+                <span class="toggle-icon">🌙</span>
+                <span class="mode-name">Rainy</span>
+            </button>
         </div>
     </nav>
 
@@ -181,6 +214,10 @@
 
             /* Chart */
             const ctx = document.getElementById('vizChart').getContext('2d');
+            const rootStyles = getComputedStyle(document.body);
+            const accent = rootStyles.getPropertyValue('--accent').trim();
+            const accentDim = rootStyles.getPropertyValue('--accent-dim').trim() || 'rgba(126, 184, 232, 0.18)';
+
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -188,11 +225,11 @@
                     datasets: [{
                         label: 'Input Value',
                         data,
-                        backgroundColor: 'rgba(126, 184, 232, 0.18)',
-                        borderColor:     'rgba(126, 184, 232, 0.8)',
+                        backgroundColor: accentDim,
+                        borderColor:     accent,
                         borderWidth: 1.5,
                         borderRadius: 7,
-                        hoverBackgroundColor: 'rgba(126, 184, 232, 0.32)',
+                        hoverBackgroundColor: accent,
                     }]
                 },
                 options: {
@@ -202,20 +239,20 @@
                         y: {
                             beginAtZero: true,
                             grid:  { color: 'rgba(255,255,255,0.04)' },
-                            ticks: { color: 'rgba(200,210,230,0.5)', font: { size: 11 } }
+                            ticks: { color: rootStyles.getPropertyValue('--muted'), font: { size: 11 } }
                         },
                         x: {
                             grid:  { display: false },
-                            ticks: { color: 'rgba(200,210,230,0.5)', font: { size: 10 } }
+                            ticks: { color: rootStyles.getPropertyValue('--muted'), font: { size: 10 } }
                         }
                     },
                     plugins: {
                         legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'rgba(8,12,22,0.9)',
-                            titleColor: 'rgba(200,210,230,0.9)',
-                            bodyColor: 'rgba(200,210,230,0.7)',
-                            borderColor: 'rgba(255,255,255,0.1)',
+                            backgroundColor: rootStyles.getPropertyValue('--bg-deep'),
+                            titleColor: rootStyles.getPropertyValue('--soft-white'),
+                            bodyColor: rootStyles.getPropertyValue('--muted-hi'),
+                            borderColor: rootStyles.getPropertyValue('--glass-border'),
                             borderWidth: 1,
                         }
                     }
