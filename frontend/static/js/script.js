@@ -375,12 +375,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    const currentMode = localStorage.getItem(THEME_KEY) || 'rainy';
+    const currentMode = localStorage.getItem(THEME_KEY) || 'sunny';
     updateMode(currentMode);
 
     if (themeBtn) {
         themeBtn.addEventListener('click', () => {
-            const now = localStorage.getItem(THEME_KEY) || 'rainy';
+            const now = localStorage.getItem(THEME_KEY) || 'sunny';
             const next = MODES[(MODES.indexOf(now) + 1) % MODES.length];
             setTheme(next);
         });
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     function checkAutoSwitch() {
         const lastManual = localStorage.getItem(TS_KEY) || 0;
         if (Date.now() - lastManual >= AUTO_INTERVAL) {
-            const curr = localStorage.getItem(THEME_KEY) || 'rainy';
+            const curr = localStorage.getItem(THEME_KEY) || 'sunny';
             const next = MODES[(MODES.indexOf(curr) + 1) % MODES.length];
             setTheme(next, true);
         }
