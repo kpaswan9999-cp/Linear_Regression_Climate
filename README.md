@@ -1,4 +1,4 @@
-# Live Link: https://linear-regression-model-climate-dep.vercel.app
+# Live Link: https://linear-regression-model-climate-deployed-on-internet-9nzzhgkhd.vercel.app
 
 # 🌩 AtmosAI — Premium Climate Intelligence Engine
 
