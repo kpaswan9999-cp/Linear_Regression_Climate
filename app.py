@@ -149,6 +149,33 @@ def api_predict():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@app.route('/api/prediction/<item_id>')
+def get_prediction(item_id):
+    history = load_history()
+    entry = next((h for h in history if h.get('id') == item_id), None)
+    if not entry:
+        return jsonify({"error": "Prediction not found"}), 404
+    
+    # Get model metrics
+    metrics = {'train_r2': 99.99, 'test_r2': 99.99}
+    try:
+        assessment_path = os.path.join(BASE_DIR, 'model_assessment.txt')
+        if os.path.exists(assessment_path):
+            with open(assessment_path, 'r', encoding='utf-8') as f:
+                lines = f.readlines()
+                train_r2 = float(lines[0].split(':')[1].strip()) * 100
+                test_r2 = float(lines[1].split(':')[1].strip()) * 100
+                metrics['train_r2'] = round(train_r2, 2)
+                metrics['test_r2'] = round(test_r2, 2)
+    except Exception as e:
+        print("Error reading metrics:", e)
+        
+    return jsonify({
+        "status": "success",
+        "entry": entry,
+        "metrics": metrics
+    })
+
 @app.route('/api/delete_history/<item_id>', methods=['DELETE'])
 def api_delete_history(item_id):
     delete_history_item(item_id)

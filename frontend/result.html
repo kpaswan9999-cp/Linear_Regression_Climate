@@ -7,12 +7,9 @@
     <link rel="stylesheet" href="static/css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Check if we have data to display, else redirect
-        const latestPred = JSON.parse(sessionStorage.getItem('latest_prediction'));
-        const metrics = JSON.parse(sessionStorage.getItem('model_metrics')) || { train_r2: 99.99, test_r2: 99.99 };
-        if (!latestPred) {
-            window.location.href = 'index.html';
-        }
+        // Check if we have data to display, else we'll try to fetch it later
+        let latestPred = JSON.parse(sessionStorage.getItem('latest_prediction'));
+        let metrics = JSON.parse(sessionStorage.getItem('model_metrics')) || { train_r2: 99.99, test_r2: 99.99 };
     </script>
 </head>
 <body>
@@ -172,7 +169,46 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            
+            // Handle loading from URL if session data is missing
+            if (!latestPred) {
+                const pathParts = window.location.pathname.split('/');
+                const predictionId = pathParts[pathParts.length - 1];
+                
+                if (predictionId && predictionId !== 'result.html' && predictionId !== 'result') {
+                    try {
+                        const loader = document.getElementById('page-loader');
+                        if (loader) loader.classList.remove('hidden');
+                        
+                        // Wait for API_BASE_URL to be set by script.js?
+                        // No, let's fetch config ourselves or use a fallback
+                        const configRes = await fetch('/api/config');
+                        const configData = await configRes.json();
+                        const baseUrl = configData.RENDER_API_URL;
+                        
+                        const res = await fetch(`${baseUrl}/api/prediction/${predictionId}`);
+                        const data = await res.json();
+                        
+                        if (data.status === 'success') {
+                            latestPred = data.entry;
+                            metrics = data.metrics;
+                        } else {
+                            alert('Prediction not found');
+                            window.location.href = '/history';
+                            return;
+                        }
+                    } catch (err) {
+                        console.error('Fetch error:', err);
+                        window.location.href = '/history';
+                        return;
+                    }
+                } else {
+                    window.location.href = '/index.html';
+                    return;
+                }
+            }
+
             const PREDICTION = latestPred.prediction;
             const userData = latestPred.inputs;
             const labels = Object.keys(userData).map(l => l.split('(')[0].trim());

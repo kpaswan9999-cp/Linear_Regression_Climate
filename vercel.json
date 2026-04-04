@@ -40,6 +40,14 @@
       "destination": "/frontend/static/$1"
     },
     {
+      "source": "/view_prediction/(.*)",
+      "destination": "/frontend/result.html"
+    },
+    {
+      "source": "/view_prediction/(.*)",
+      "destination": "/frontend/result.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/frontend/$1"
     }
